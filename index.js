@@ -36,9 +36,18 @@ session = require('express-session'),
 passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy,
 FacebookStrategy = require('passport-facebook').Strategy;
-
 /*
 * SERVER - The Server used for shutdown etc
 * See: https://www.exratione.com/2011/07/running-a-nodejs-server-as-a-service-using-forever/
 */
 var server = exports.server = express();
+/*
+* CONFIGS - The Configurations
+*/
+var config = {};
+server.setConfig = function(config) {
+  this.config = config;
+}
+server.getConfig = function() {
+  return this.config;
+}
