@@ -10,8 +10,6 @@
 
 // See also http://www.sitepoint.com/understanding-module-exports-exports-node-js/
 
-var exports = module.exports = {}; // placeholder object
-
 var express = require('express'),
 path = require('path'),
 mime = require('mime'),
@@ -36,18 +34,30 @@ session = require('express-session'),
 passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy,
 FacebookStrategy = require('passport-facebook').Strategy;
-/*
-* SERVER - The Server used for shutdown etc
-* See: https://www.exratione.com/2011/07/running-a-nodejs-server-as-a-service-using-forever/
-*/
-var server = exports.server = express();
-/*
-* CONFIGS - The Configurations
-*/
-var config = {};
-server.setConfig = function(config) {
-  this.config = config;
-}
-server.getConfig = function() {
-  return this.config;
-}
+
+module.exports = {
+  testFunction: function(string) {
+    return String(string);
+  },
+  /*
+  * SERVER - The Server used for shutdown etc
+  * See: https://www.exratione.com/2011/07/running-a-nodejs-server-as-a-service-using-forever/
+  */
+  server: function() {
+    var server = express();
+    /*
+    * CONFIGS - The Configurations
+    */
+    var config = {};
+    server.setConfig = function(config) {
+      this.config = config;
+    }
+    server.getConfig = function() {
+      return this.config;
+    }
+    return server;
+  }
+
+  // more
+
+};
