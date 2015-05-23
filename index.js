@@ -1,14 +1,24 @@
 /*
 * TACIT SERVER - The Tacit Server
 *
-* USAGE - can be required like so:
-* var tacitServer = require('tacit-server');
+* Usage
+* var TacitServer = require("./tacitserver");
 *
-* var server = tacitServer.server;
-* //do something with server
+* // you can use the 'new' keyword
+* var ts = new TacitServer(5); // tacit server object
+* var s = ts.Server(); // server object
+* var config = {'test':true};
+* s.setConfig(config); // sets the server config
+*
+* // or you can skip it!
+* var ts = TacitServer(5); // tacit server object
+* var s = ts.Server(); // server object
+* var config = {'test':true};
+* s.setConfig(config); // sets the server config
 */
 
 // See also http://www.sitepoint.com/understanding-module-exports-exports-node-js/
+// See also http://stackoverflow.com/questions/20534702/node-js-use-of-module-exports-as-a-constructor
 
 var express = require('express'),
 path = require('path'),
@@ -34,30 +44,48 @@ session = require('express-session'),
 passport = require('passport'),
 LocalStrategy = require('passport-local').Strategy,
 FacebookStrategy = require('passport-facebook').Strategy;
-
-module.exports = {
-  testFunction: function(string) {
-    return String(string);
-  },
+/*
+ * SERVER - The Server used for shutdown etc
+ * See: https://www.exratione.com/2011/07/running-a-nodejs-server-as-a-service-using-forever/
+ */
+function Server() {
+  if(!(this instanceof Server)){
+    return new Server();
+  };
   /*
-  * SERVER - The Server used for shutdown etc
-  * See: https://www.exratione.com/2011/07/running-a-nodejs-server-as-a-service-using-forever/
-  */
-  server: function() {
-    var server = express();
-    /*
-    * CONFIGS - The Configurations
-    */
-    var config = {};
-    server.setConfig = function(config) {
-      this.config = config;
-    }
-    server.getConfig = function() {
-      return this.config;
-    }
-    return server;
-  }
-
-  // more
-
+   * CONFIGS - The Configurations
+   */
+  this.config = {}; // does not show as a property, but can be accessed
 };
+// Define TacitServer
+function TacitServer() {
+  if(!(this instanceof TacitServer)){
+    return new TacitServer();
+  };
+  /*
+   * CONFIGS - The Configurations
+   */
+  this.config = {}; // does not show as a property, but can be accessed
+};
+// setConfig function
+TacitServer.setConfig = function setConfig(config) {
+  TacitServer.config = config;
+};
+// getConfig function
+TacitServer.getConfig = function getConfig() {
+  return TacitServer.config;
+};
+// Test function 1
+TacitServer.testFunction1 = function testFunction1(string) {
+  return String(string);
+};
+// Test object 1
+TacitServer.testObject1 = function testObject1(string) {
+  return String(string);
+};
+// Add Server to TacitServer
+TacitServer.Server = function Server() {
+  return Server;
+};
+// Export TacitServer
+module.exports = TacitServer;
