@@ -57,6 +57,14 @@ function Server() {
    */
   this.config = {}; // does not show as a property, but can be accessed
 };
+// Server setConfig function
+Server.setConfig = function setConfig(config) {
+  Server.config = config;
+};
+// Server getConfig function
+Server.getConfig = function getConfig() {
+  return Server.config;
+};
 // Define TacitServer
 function TacitServer() {
   if(!(this instanceof TacitServer)){
@@ -67,19 +75,19 @@ function TacitServer() {
    */
   this.config = {}; // does not show as a property, but can be accessed
 };
-// setConfig function
+// TacitServer setConfig function
 TacitServer.setConfig = function setConfig(config) {
   TacitServer.config = config;
 };
-// getConfig function
+// TacitServer getConfig function
 TacitServer.getConfig = function getConfig() {
   return TacitServer.config;
 };
-// Test function 1
+// TacitServer Test function 1
 TacitServer.testFunction1 = function testFunction1(string) {
   return String(string);
 };
-// Test object 1
+// TacitServer Test object 1
 TacitServer.testObject1 = function testObject1(string) {
   return String(string);
 };
